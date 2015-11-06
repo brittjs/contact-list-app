@@ -22,28 +22,31 @@ contact_database = ContactDatabase.new
 
 if command == "help"
   puts help 
+
 elsif command == "new"
-  puts "Enter fullname"
-  name = STDIN.gets.chomp
   puts "Enter email" 
   email = STDIN.gets.chomp
-  contact = [name, email]
-  contact_database.write_contact_to_csv(contact)
+  if Contact.email_exists?(email)
+    puts "Email already exists"
+    exit-program
+  end  
+  puts "Enter fullname"
+  name = STDIN.gets.chomp
+  Contact.create(name, email)
+
 elsif command == "list"
-  contact_database.display_contacts
+  Contact.all
+
 elsif command == "show"
   id = ARGV[1]
-  contact = contact_database.find_contact_with_id(id)
-  if contact 
-    puts contact
-  else
-    puts "Not found."
-  end
+  Contact.show(id)
+
+elsif command == "find"
+  search_term = ARGV[1]
+  Contact.find(search_term)
 end
-# Contact.create(name, email)
-# elsif command == "list"
-#   Contact.all
-# end
+
+
 
 
   

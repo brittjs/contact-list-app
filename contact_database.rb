@@ -27,6 +27,11 @@ class ContactDatabase
     end
   end
 
+  def get_all_contacts
+    CSV.read('contacts.csv')
+  end
+
+
   def find_contact_with_id(id)
     CSV.foreach('contacts.csv') do |contact|
       if contact[0] == id
@@ -36,7 +41,18 @@ class ContactDatabase
     return nil
   end
 
+  def find_contact_containing(search_term)
+    CSV.foreach('contacts.csv') do |contact|
+      if contact.join('').downcase.include?(search_term.downcase)
+        return contact
+      end  
+    end 
+    return nil
+  end
+
 end
+
+
 
 # cd = ContactDatabase.new
 # cd.display_contacts
