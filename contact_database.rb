@@ -12,10 +12,37 @@ class ContactDatabase
     @current_id = 0  
   end
 
-  #TODO get the last id from the csv
-  def write_contact_to_csv(contact)
+  def encode_phone_numbers(phone_numbers)
+    #take hash of phone numbers and change to string with spaces seperating each entry
+    #want format to look like mobile:7777777777|home:8888888888
+    result = ""
+    phone_numbers.each do |label, number|
+      result += label + ":" + number + "|"
+    end
+    result[-1, 1] = ""
+    result
+  end  
+
+  def decode_phone_numbers(numbers_as_strings)
+    result = {}
+    temp_nums = numbers_as_strings.split("|")
+    temp_nums.each do |entry| 
+      kv = entry.split(":") #this looks like [mobile, 77777] 
+      label = kv[0]
+      num = kv[1]
+      result[label] = num
+    end
+    result
+  end
+
+
+  def write_contact_to_csv(contact, phone_numbers = {})
     CSV.open('contacts.csv','a') do |csv| 
       contact.unshift(@current_id)
+      if phone_numbers.keys.any?
+        contact << encode_phone_numbers(phone_numbers)
+      end
+      p contact
       csv << contact 
       @current_id += 1
     end
@@ -53,6 +80,10 @@ class ContactDatabase
 end
 
 
-
 # cd = ContactDatabase.new
-# cd.display_contacts
+# # # cd.display_contacts
+
+# a = {"home" => "5555555555",
+#       "mobile" => "3333333333" }
+
+# p cd.decode_phone_numbers("home:5555555555|mobile:3333333333")

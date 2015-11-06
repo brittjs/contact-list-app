@@ -30,9 +30,25 @@ elsif command == "new"
     puts "Email already exists"
     exit-program
   end  
+  
   puts "Enter fullname"
   name = STDIN.gets.chomp
-  Contact.create(name, email)
+
+  
+  # puts "Enter phone number label (e.g. home, mobile)"
+  # label = STDIN.gets.chomp
+  numbers = {}
+  loop do
+    puts "Enter phone number label (e.g. home, mobile) or leave blank and press enter."
+    label = STDIN.gets.chomp
+    if label.empty?
+      break
+    end
+    puts "Enter phone number"
+    numbers[label] = STDIN.gets.chomp
+  end
+  Contact.create(name, email, numbers)
+
 
 elsif command == "list"
   Contact.all

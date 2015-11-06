@@ -20,11 +20,11 @@ class Contact
  
   ## Class Methods
   class << self
-    def create(name, email)
+    def create(name, email, phone_numbers = {})
       # TODO: Will initialize a contact as well as add it to the list of contacts
       if email_exists?(email) == false
         contact = [name, email]
-        @@database.write_contact_to_csv(contact)
+        @@database.write_contact_to_csv(contact, phone_numbers)
       end
     end
   
