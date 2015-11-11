@@ -31,9 +31,12 @@ elsif command == "new"
     exit-program
   end  
   
-  puts "Enter fullname"
-  name = STDIN.gets.chomp
+  puts "Enter first name"
+  firstname = STDIN.gets.chomp
 
+
+  puts "Enter last name"
+  lastname = STDIN.gets.chomp
   
   # puts "Enter phone number label (e.g. home, mobile)"
   # label = STDIN.gets.chomp
@@ -47,7 +50,8 @@ elsif command == "new"
     puts "Enter phone number"
     numbers[label] = STDIN.gets.chomp
   end
-  Contact.create(name, email, numbers)
+  contact = Contact.new(firstname, lastname, email) #deal with numbers later
+  contact.save
 
 
 elsif command == "list"

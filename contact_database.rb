@@ -78,11 +78,3 @@ class ContactDatabase
 
 end
 
-
-# cd = ContactDatabase.new
-# # # # cd.display_contacts
-
-# a = {"home" => "5555555555",
-#       "mobile" => "3333333333" }
-
-# p cd.encode_phone_numbers(a)
